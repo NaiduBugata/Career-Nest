@@ -94,7 +94,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCourseCreated }) => {
 
       console.log('Sending course data:', courseData);
 
-      const response = await fetch(`${config.API_URL}/courses', {
+      const response = await fetch(`${config.API_URL}/courses`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

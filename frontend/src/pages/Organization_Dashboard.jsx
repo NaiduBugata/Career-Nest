@@ -156,7 +156,7 @@ const OrganizationDashboard = () => {
   const loadPendingEvents = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/pending-student-events', {
+      const response = await fetch(`${config.API_URL}/organization/pending-student-events`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ const OrganizationDashboard = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/review-student-event', {
+      const response = await fetch(`${config.API_URL}/organization/review-student-event`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -226,7 +226,7 @@ const OrganizationDashboard = () => {
   const loadStudents = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/students', {
+      const response = await fetch(`${config.API_URL}/organization/students`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -249,7 +249,7 @@ const OrganizationDashboard = () => {
   const loadAnnouncements = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/announcements', {
+      const response = await fetch(`${config.API_URL}/organization/announcements`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -282,7 +282,7 @@ const OrganizationDashboard = () => {
   const loadEvents = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/events', {
+      const response = await fetch(`${config.API_URL}/organization/events`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -323,7 +323,7 @@ const OrganizationDashboard = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/announcements', {
+      const response = await fetch(`${config.API_URL}/organization/announcements`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -379,7 +379,7 @@ const OrganizationDashboard = () => {
       }
 
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.API_URL}/organization/events', {
+      const response = await fetch(`${config.API_URL}/organization/events`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -454,7 +454,7 @@ const OrganizationDashboard = () => {
       // Log request data for debugging
       console.log('Sending student data:', studentData);
       
-      const response = await fetch(`${config.API_URL}/organization/add-student', {
+      const response = await fetch(`${config.API_URL}/organization/add-student`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -493,7 +493,7 @@ const OrganizationDashboard = () => {
         if (msg.includes('already exists')) {
           const confirmLink = window.confirm('This email already exists. Do you want to link this existing student to your organization?');
           if (confirmLink) {
-            const linkResp = await fetch(`${config.API_URL}/organization/link-existing-student-by-email', {
+            const linkResp = await fetch(`${config.API_URL}/organization/link-existing-student-by-email`, {
               method: 'POST',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -554,7 +554,7 @@ const OrganizationDashboard = () => {
 
       console.log('Uploading file:', bulkFile.name);
 
-      const response = await fetch(`${config.API_URL}/organization/add-students-bulk', {
+      const response = await fetch(`${config.API_URL}/organization/add-students-bulk`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -703,7 +703,7 @@ const OrganizationDashboard = () => {
         navigate('/');
         return;
       }
-      const response = await fetch(`${config.API_URL}/organization/delete-all-students', {
+      const response = await fetch(`${config.API_URL}/organization/delete-all-students`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -803,7 +803,7 @@ const OrganizationDashboard = () => {
                                 localStorage.setItem('username_changed', 'true');
                                 try {
                                   const token = localStorage.getItem('token');
-                                  const resp = await fetch(`${config.API_URL}/auth/profile', {
+                                  const resp = await fetch(`${config.API_URL}/auth/profile`, {
                                     method: 'PUT',
                                     headers: {
                                       'Content-Type': 'application/json',

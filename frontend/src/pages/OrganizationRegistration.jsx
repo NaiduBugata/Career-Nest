@@ -30,7 +30,7 @@ const OrganizationRegistration = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${config.API_URL}/public-org/register-request', {
+      const response = await fetch(`${config.API_URL}/public-org/register-request`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
