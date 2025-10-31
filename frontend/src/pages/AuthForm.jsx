@@ -203,12 +203,15 @@ const AuthForm = () => {
               </button>
             </div>
 
-            <div className="regi-link">
-              <p>
-                Don't have an account? <br />
-                <a href="#" onClick={handleRegisterClick}>Sign Up</a>
-              </p>
-            </div>
+            {/* Hide signup link for admin role */}
+            {userRole !== 'admin' && (
+              <div className="regi-link">
+                <p>
+                  Don't have an account? <br />
+                  <a href="#" onClick={handleRegisterClick}>Sign Up</a>
+                </p>
+              </div>
+            )}
           </form>
         </div>
 
