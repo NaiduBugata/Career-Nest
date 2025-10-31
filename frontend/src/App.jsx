@@ -8,6 +8,8 @@ import OrganizationDashboard from "./pages/Organization_Dashboard";
 import AdminDashboard from "./pages/Admin_Dashboard";
 import OrganizationRegistration from "./pages/OrganizationRegistration";
 import Courses from "./pages/Courses";
+import About from "./pages/About";
+import Help from "./pages/Help";
 
 function App() {
   return (
@@ -15,6 +17,10 @@ function App() {
       <Routes>
         {/* Landing page as default */}
         <Route path="/" element={<Landing />} />
+
+        {/* About and Help pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/help" element={<Help />} />
 
         {/* Role selection page */}
         <Route path="/Role" element={<RoleSelection />} />
