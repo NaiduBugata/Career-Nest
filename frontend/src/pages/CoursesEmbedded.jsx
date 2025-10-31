@@ -4,6 +4,7 @@ import '../styles/courses.css';
 import CourseModal from './CourseModal';
 import CreateCourseModal from './CreateCourseModal';
 import EditCourseModal from './EditCourseModal';
+import config from '../config';
 
 // Embedded version of Courses: no standalone header/back; fits inside dashboard-main
 const CoursesEmbedded = ({ user: userProp = null }) => {
@@ -31,7 +32,7 @@ const CoursesEmbedded = ({ user: userProp = null }) => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:8000/api/courses', {
+      const res = await fetch('${config.API_URL}/courses', {
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -77,7 +78,7 @@ const CoursesEmbedded = ({ user: userProp = null }) => {
     if (!confirmed) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:8000/api/courses/${course.id}`, {
+      const res = await fetch(`${config.API_URL}/courses/${course.id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
       });
@@ -207,3 +208,4 @@ const CoursesEmbedded = ({ user: userProp = null }) => {
 };
 
 export default CoursesEmbedded;
+

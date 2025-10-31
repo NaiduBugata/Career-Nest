@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/organization_registration.css';
+import config from '../config';
 
 const OrganizationRegistration = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const OrganizationRegistration = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/public-org/register-request', {
+      const response = await fetch('${config.API_URL}/public-org/register-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

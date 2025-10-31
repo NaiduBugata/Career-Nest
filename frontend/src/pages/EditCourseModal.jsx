@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import config from '../config';
 
 const EditCourseModal = ({ isOpen, onClose, course, onCourseUpdated }) => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const EditCourseModal = ({ isOpen, onClose, course, onCourseUpdated }) => {
       try {
         setInitializing(true);
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:8000/api/courses/${course.id}`, {
+        const res = await fetch(`${config.API_URL}/courses/${course.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -112,7 +113,7 @@ const EditCourseModal = ({ isOpen, onClose, course, onCourseUpdated }) => {
           points: parseInt(q.points) || 1
         })).filter(q => q.question_text && q.correct_answer)
       };
-      const res = await fetch(`http://localhost:8000/api/courses/${course.id}`, {
+      const res = await fetch(`${config.API_URL}/courses/${course.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -259,3 +260,4 @@ const EditCourseModal = ({ isOpen, onClose, course, onCourseUpdated }) => {
 };
 
 export default EditCourseModal;
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import config from '../config';
 
 const CreateCourseModal = ({ isOpen, onClose, onCourseCreated }) => {
   const [loading, setLoading] = useState(false);
@@ -93,7 +94,7 @@ const CreateCourseModal = ({ isOpen, onClose, onCourseCreated }) => {
 
       console.log('Sending course data:', courseData);
 
-      const response = await fetch('http://localhost:8000/api/courses', {
+      const response = await fetch('${config.API_URL}/courses', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import config from '../config';
 
 const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab = 'overview' }) => {
   console.log('🎬 CourseModal rendered with props:', { course, userRole });
@@ -53,7 +54,7 @@ const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab
       console.log('🔑 Auth token exists:', !!token);
       console.log('🔑 Token preview:', token ? `${token.substring(0, 20)}...` : 'No token');
       
-      const url = `http://localhost:8000/api/courses/${course.id}`;
+      const url = `${config.API_URL}/courses/${course.id}`;
       console.log('📡 Request URL:', url);
       
       const headers = {
@@ -98,7 +99,7 @@ const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab
       });
       
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        alert(`Network error: Cannot connect to server. Please check if the backend is running on http://localhost:8000`);
+        alert(`Network error: Cannot connect to server. Please check if the backend is running.`);
       } else {
         alert(`Error loading course details: ${error.message}`);
       }
@@ -111,7 +112,7 @@ const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab
     try {
       console.log('🎯 Starting enrollment for course:', course.id);
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8000/api/courses/${course.id}/enroll`, {
+      const response = await fetch(`${config.API_URL}/courses/${course.id}/enroll`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -143,7 +144,7 @@ const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab
     
     try {
       const token = localStorage.getItem('token');
-      await fetch(`http://localhost:8000/api/courses/${course.id}/progress`, {
+      await fetch(`${config.API_URL}/courses/${course.id}/progress`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -189,7 +190,7 @@ const CourseModal = ({ course, userRole, onClose, onEnrollmentChange, initialTab
         answer: quizAnswers[q.id] || ''
       }));
 
-      const response = await fetch(`http://localhost:8000/api/courses/${course.id}/quiz`, {
+      const response = await fetch(`${config.API_URL}/courses/${course.id}/quiz`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

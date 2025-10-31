@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/universal.css';
+import config from '../config';
 
 // Custom styles for better form alignment
 const formFieldStyle = {
@@ -48,7 +49,7 @@ const AuthForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/auth/login', {
+      const response = await fetch(`${config.API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +99,7 @@ const AuthForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/auth/register', {
+      const response = await fetch(`${config.API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

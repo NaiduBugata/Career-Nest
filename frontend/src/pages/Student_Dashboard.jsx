@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/student_dashboard.css';
 import CoursesEmbedded from './CoursesEmbedded';
+import config from '../config';
 
 // Create Event Form Component
 const CreateEventForm = ({ onSubmit, loading }) => {
@@ -407,7 +408,7 @@ const StudentDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
-        const resp = await fetch('http://localhost:8000/api/auth/profile', {
+        const resp = await fetch('${config.API_URL}/auth/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -435,7 +436,7 @@ const StudentDashboard = () => {
       const token = localStorage.getItem('token');
       
       // Load announcements visible to this student
-      const announcementsResponse = await fetch('http://localhost:8000/api/student/announcements', {
+      const announcementsResponse = await fetch('${config.API_URL}/student/announcements', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -448,7 +449,7 @@ const StudentDashboard = () => {
       }
 
       // Load events available to this student
-      const eventsResponse = await fetch('http://localhost:8000/api/student/events', {
+      const eventsResponse = await fetch('${config.API_URL}/student/events', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -461,7 +462,7 @@ const StudentDashboard = () => {
       }
 
       // Load registered events
-      const registeredResponse = await fetch('http://localhost:8000/api/student/registered-events', {
+      const registeredResponse = await fetch('${config.API_URL}/student/registered-events', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -474,7 +475,7 @@ const StudentDashboard = () => {
       }
 
       // Load membership status
-      const membershipResp = await fetch('http://localhost:8000/api/student/membership', {
+      const membershipResp = await fetch('${config.API_URL}/student/membership', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -524,7 +525,7 @@ const StudentDashboard = () => {
   const loadCreatedEvents = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/student/created-events', {
+      const response = await fetch('${config.API_URL}/student/created-events', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -550,7 +551,7 @@ const StudentDashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/student/create-event', {
+      const response = await fetch('${config.API_URL}/student/create-event', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -600,7 +601,7 @@ const StudentDashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/student/join-private-event', {
+      const response = await fetch('${config.API_URL}/student/join-private-event', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -628,7 +629,7 @@ const StudentDashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/organization/register-event', {
+      const response = await fetch('${config.API_URL}/organization/register-event', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -748,7 +749,7 @@ const StudentDashboard = () => {
                                 // attempt backend update if endpoint exists
                                 try {
                                   const token = localStorage.getItem('token');
-                                  const resp = await fetch('http://localhost:8000/api/auth/profile', {
+                                  const resp = await fetch('${config.API_URL}/auth/profile', {
                                     method: 'PUT',
                                     headers: {
                                       'Content-Type': 'application/json',
@@ -1067,7 +1068,7 @@ const StudentDashboard = () => {
                         const token = localStorage.getItem('token');
                         if (!token) return;
                         // refresh profile
-                        const p = await fetch('http://localhost:8000/api/auth/profile', {
+                        const p = await fetch('${config.API_URL}/auth/profile', {
                           headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
                         if (p.ok) {
@@ -1078,7 +1079,7 @@ const StudentDashboard = () => {
                           }
                         }
                         // refresh membership
-                        const m = await fetch('http://localhost:8000/api/student/membership', {
+                        const m = await fetch('${config.API_URL}/student/membership', {
                           headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
                         if (m.ok) {

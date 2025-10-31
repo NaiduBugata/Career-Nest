@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/universal.css';
 import '../styles/admin_dashboard.css';
+import config from '../config';
 
 const Admin_Dashboard = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const Admin_Dashboard = () => {
   const [newPassword, setNewPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
 
-  const API_BASE = 'http://localhost:8000/api';
+  const API_BASE = config.API_URL;
 
   // Get auth token
   const getAuthToken = () => {
