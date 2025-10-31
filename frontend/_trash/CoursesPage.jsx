@@ -1,0 +1,659 @@
+import React from 'react';import React from 'react';import React from 'react';import React from 'react';
+
+import '../styles/universal.css';
+
+import '../styles/courses.css';import '../styles/universal.css';
+
+
+
+const CoursesPage = ({ embedded = false }) => {import '../styles/courses.css';import '../styles/universal.css';import '../styles/universal.css';
+
+  const content = (
+
+    <div className="courses-inner">
+
+      <h2 style={{ margin: 0 }}>📚 Courses</h2>
+
+      <p style={{ color: '#64748B' }}>Courses content will appear here.</p>const CoursesPage = ({ embedded = false }) => {import '../styles/courses.css';import '../styles/courses.css';
+
+    </div>
+
+  );  const content = (
+
+
+
+  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;    <div className="courses-inner">
+
+
+
+  return (      <h2 style={{ margin: 0 }}>📚 Courses</h2>
+
+    <div className="courses-page">
+
+      <div className="dashboard-main">{content}</div>      <p style={{ color: '#64748B' }}>Courses content will appear here.</p>const CoursesPage = ({ embedded = false }) => {const CoursesPage = ({ embedded = false, user = null }) => {
+
+    </div>
+
+  );    </div>
+
+};
+
+  );  const content = (  const content = (
+
+export default CoursesPage;
+
+
+
+  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;    <div className="courses-inner">    <div className="courses-inner">
+
+
+
+  return (      <h2 style={{ margin: 0 }}>📚 Courses</h2>      <h2 style={{ margin: 0 }}>📚 Courses</h2>
+
+    <div className="courses-page">
+
+      <div className="dashboard-main">{content}</div>      <p style={{ color: '#64748B' }}>Courses content will appear here.</p>      <p style={{ color: '#64748B' }}>Courses content will appear here.</p>
+
+    </div>
+
+  );    </div>    </div>
+
+};
+
+  );  );
+
+export default CoursesPage;
+
+
+  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;
+
+
+
+  return (  return (
+
+    <div className="courses-page">    <div className="courses-page">
+
+      <div className="dashboard-main">{content}</div>      <div className="dashboard-main">{content}</div>
+
+    </div>    </div>
+
+  );  );
+
+};};
+
+
+
+export default CoursesPage;export default CoursesPage;
+import React from 'react';
+import '../styles/universal.css';
+import '../styles/courses.css';
+
+const CoursesPage = ({ embedded = false }) => {
+  const content = (
+    <div className="courses-inner">
+      <h2 style={{ margin: 0 }}>📚 Courses</h2>
+      <p style={{ color: '#64748B' }}>Courses content will appear here.</p>
+    </div>
+  );
+
+  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;
+
+  return (
+    <div className="courses-page">
+      <div className="dashboard-main">{content}</div>
+    </div>
+  );
+};
+
+export default CoursesPage;
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/universal.css';
+import '../styles/courses.css';
+import CourseModal from './CourseModal';
+import CreateCourseModal from './CreateCourseModal';
+
+const CoursesPage = ({ embedded = false, user: propUser = null }) => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterDifficulty, setFilterDifficulty] = useState('all');
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData = propUser ? JSON.stringify(propUser) : localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    if (!token) { navigate('/Role'); return; }
+    if (userData) setUser(JSON.parse(userData));
+    loadCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadCourses = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:8000/api/courses', { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setCourses(data.data || []);
+    } catch (err) {
+      console.error('Failed to load courses', err);
+      setCourses([]);
+    } finally { setLoading(false); }
+  };
+
+  const handleCourseClick = (course) => setSelectedCourse(course);
+  const handleCreateCourse = () => setShowCreateModal(true);
+
+  const goBackToDashboard = () => {
+    const currentUser = user || JSON.parse(localStorage.getItem('user') || 'null');
+    const role = currentUser?.role;
+    if (role === 'admin') navigate('/Admin_Dashboard');
+    else if (role === 'organization') navigate('/Organization_Dashboard');
+    else if (role === 'student') navigate('/Student_Dashboard');
+    else navigate('/Role');
+  };
+
+  const filteredCourses = courses.filter(c => {
+    const matchesSearch = !searchQuery || c.title.toLowerCase().includes(searchQuery.toLowerCase()) || (c.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = filterCategory === 'all' || c.category === filterCategory;
+    const matchesDifficulty = filterDifficulty === 'all' || c.difficulty_level === filterDifficulty;
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
+
+  const content = (
+    <div className="courses-inner">
+      <div className="courses-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {!embedded && (<button className="btn-details" onClick={goBackToDashboard} style={{ padding: '0.5rem 0.75rem' }}>← Back to Dashboard</button>)}
+          <h1 className="courses-title" style={{ margin: 0 }}>📚 Courses {user?.role === 'student' && (<span style={{ fontSize: '1rem', color: '#64748B', fontWeight: 'normal', marginLeft: '0.5rem' }}>({filteredCourses.length} available)</span>)}</h1>
+        </div>
+        {!embedded && (<button className="create-course-btn" onClick={handleCreateCourse}>➕ Create Course</button>)}
+      </div>
+
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <input type="text" placeholder="Search courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '6px', minWidth: '200px', flex: 1 }} />
+        <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} style={{ padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '6px', background: 'white' }}>
+          <option value="all">All Categories</option>
+          {Array.from(new Set(courses.map(c => c.category).filter(Boolean))).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+        </select>
+        <select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)} style={{ padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '6px', background: 'white' }}>
+          <option value="all">All Levels</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </div>
+
+      {filteredCourses.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">📖</div>
+          <h3>No courses found</h3>
+          <p>{courses.length === 0 ? 'No courses have been created yet.' : 'Try adjusting your search filters.'}</p>
+        </div>
+      ) : (
+        <div className="courses-grid">
+          {filteredCourses.map(course => (
+            <div key={course.id} className="course-card">
+              <div className="course-thumbnail"><div className="play-icon">▶️</div></div>
+              <div className="course-content">
+                <h3 className="course-title">{course.title}</h3>
+                <p className="course-description">{course.description}</p>
+                <div className="course-meta">
+                  <span className={`course-badge`}>{course.difficulty_level}</span>
+                  {course.category && <span className="course-badge course-category">{course.category}</span>}
+                  <span style={{ color: '#64748B', fontSize: '0.8rem' }}>By {course.created_by_name}</span>
+                </div>
+                <div className="course-actions">
+                  <button className="course-btn btn-primary" onClick={() => handleCourseClick(course)}>{user?.role === 'student' ? (course.is_enrolled ? 'Continue' : 'Enroll') : 'View Details'}</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {selectedCourse && <CourseModal course={selectedCourse} userRole={user?.role} onClose={() => setSelectedCourse(null)} onEnrollmentChange={loadCourses} />}
+      {showCreateModal && <CreateCourseModal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} onCourseCreated={loadCourses} />}
+    </div>
+  );
+
+  if (loading) return <div className="courses-page"><div className="loading-container" style={{ textAlign: 'center', padding: '3rem' }}><div className="loading-spinner"></div><p style={{ marginTop: '1rem', color: '#64748B' }}>Loading courses...</p></div></div>;
+
+  if (embedded) return <div style={{ width: '100%' }}>{content}</div>;
+
+  return (
+    <div className="courses-page">
+      <header>
+        <nav className="navbar">
+          <div className="logo">Career<span>Nest</span></div>
+          <ul className="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#help">Help</a></li>
+            <li><button className="logout-btn" onClick={() => navigate('/Role')}>Logout</button></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div className="dashboard-main">
+        {content}
+      </div>
+    </div>
+  );
+};
+
+export default CoursesPage;
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/universal.css';
+import '../styles/courses.css';
+import CourseModal from './CourseModal';
+import CreateCourseModal from './CreateCourseModal';
+
+const CoursesPage = ({ embedded = false, user: propUser = null }) => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterDifficulty, setFilterDifficulty] = useState('all');
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get user data and token from localStorage
+    const userData = propUser ? JSON.stringify(propUser) : localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Not authenticated - redirect to role selection/login
+      console.warn('No auth token found, redirecting to role selection');
+      navigate('/Role');
+      return;
+    }
+
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+    loadCourses();
+  }, [navigate]);
+
+  const loadCourses = async () => {
+    try {
+      console.log('🔄 Loading courses...');
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      
+      console.log('🔑 Token for courses API:', token ? `${token.substring(0, 20)}...` : 'No token');
+      
+      const response = await fetch('http://localhost:8000/api/courses', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('📡 Courses response status:', response.status);
+      console.log('📡 Courses response ok:', response.ok);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ Courses API Error:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log('📦 Courses response data:', data);
+      
+      if (data.success) {
+        console.log('✅ Loaded', data.data?.length || 0, 'courses');
+        setCourses(data.data || []);
+      } else {
+        console.error('❌ Courses API returned success=false:', data.message);
+        setCourses([]);
+        alert(`Failed to load courses: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('❌ Courses loading error:', {
+        name: error.name,
+        message: error.message
+      });
+      setCourses([]);
+      
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        alert('Network error: Cannot connect to server. Please check if the backend is running.');
+      } else {
+        alert(`Error loading courses: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCourseClick = (course) => {
+    console.log('🖱️ Course clicked:', { id: course.id, title: course.title });
+    console.log('📋 Setting selected course...');
+    setSelectedCourse(course);
+    console.log('✅ Selected course set');
+  };
+
+  const handleCreateCourse = () => {
+    setShowCreateModal(true);
+  };
+
+  const goBackToDashboard = () => {
+    // prefer in-memory user, fall back to localStorage
+    const currentUser = user || JSON.parse(localStorage.getItem('user') || 'null');
+    const role = currentUser?.role;
+    if (role === 'admin') navigate('/Admin_Dashboard');
+    else if (role === 'organization') navigate('/Organization_Dashboard');
+    else if (role === 'student') navigate('/Student_Dashboard');
+    else navigate('/Role');
+  };
+
+  const handleCourseCreated = (newCourse) => {
+    setCourses(prev => [newCourse, ...prev]);
+    setShowCreateModal(false);
+  };
+
+  const getFilteredCourses = () => {
+    return courses.filter(course => {
+      const matchesSearch = !searchQuery || 
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.category?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesCategory = filterCategory === 'all' || course.category === filterCategory;
+      const matchesDifficulty = filterDifficulty === 'all' || course.difficulty_level === filterDifficulty;
+      
+      return matchesSearch && matchesCategory && matchesDifficulty;
+    });
+  };
+
+  const getUniqueCategories = () => {
+    const categories = courses.map(course => course.category).filter(Boolean);
+    return [...new Set(categories)];
+  };
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case 'Beginner': return 'difficulty-beginner';
+      case 'Intermediate': return 'difficulty-intermediate';
+      case 'Advanced': return 'difficulty-advanced';
+      default: return 'difficulty-beginner';
+    }
+  };
+
+  const getProgressInfo = (course) => {
+    if (user?.role !== 'student') return null;
+    
+    const videoProgress = course.video_watch_percentage || 0;
+    const quizScore = course.quiz_score || 0;
+    const isCompleted = course.is_completed;
+    const isEnrolled = course.is_enrolled;
+    
+    return {
+      videoProgress,
+      quizScore,
+      isCompleted,
+      isEnrolled,
+      overallProgress: isCompleted ? 100 : Math.max(videoProgress, quizScore) / 2
+    };
+  };
+
+  const canCreateCourses = user?.role === 'admin' || user?.role === 'organization';
+
+  const LoadingView = (
+    <div className="courses-page">
+      <div className="loading-container" style={{ textAlign: 'center', padding: '3rem' }}>
+        <div className="loading-spinner"></div>
+        <p style={{ marginTop: '1rem', color: '#64748B' }}>Loading courses...</p>
+      </div>
+    </div>
+  );
+
+  if (loading) return LoadingView;
+
+  const filteredCourses = getFilteredCourses();
+  const renderCoursesContent = () => (
+    <>
+      {/* Header */}
+      <div className="courses-header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {!embedded && (
+            <button className="btn-details" onClick={goBackToDashboard} style={{ padding: '0.5rem 0.75rem' }}>
+              10 Back to Dashboard
+            </button>
+          )}
+          <h1 className="courses-title" style={{ margin: 0 }}>
+             Courses
+            {user?.role === 'student' && (
+              <span style={{ fontSize: '1rem', color: '#64748B', fontWeight: 'normal', marginLeft: '0.5rem' }}>
+                ({filteredCourses.length} available)
+              </span>
+            )}
+          </h1>
+        </div>
+
+        {canCreateCourses && !embedded && (
+          <button className="create-course-btn" onClick={handleCreateCourse}>
+             Create Course
+          </button>
+        )}
+      </div>
+
+      {/* Filters */}
+      <div style={{ 
+        display: 'flex', 
+        gap: '1rem', 
+        marginBottom: '2rem', 
+        flexWrap: 'wrap', 
+        alignItems: 'center'
+      }}>
+        <input
+          type="text"
+          placeholder="Search courses..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            padding: '0.75rem',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            minWidth: '200px',
+            flex: 1
+          }}
+        />
+        
+        <select
+          value={filterCategory}
+          onChange={(e) => setFilterCategory(e.target.value)}
+          style={{
+            padding: '0.75rem',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            background: 'white'
+          }}
+        >
+          <option value="all">All Categories</option>
+          {getUniqueCategories().map(category => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
+        
+        <select
+          value={filterDifficulty}
+          onChange={(e) => setFilterDifficulty(e.target.value)}
+          style={{
+            padding: '0.75rem',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            background: 'white'
+          }}
+        >
+          <option value="all">All Levels</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </div>
+
+      {/* Courses Grid */}
+      {filteredCourses.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">📖</div>
+          <h3>No courses found</h3>
+          <p>
+            {courses.length === 0 
+              ? 'No courses have been created yet.'
+              : 'Try adjusting your search filters.'
+            }
+          </p>
+          {canCreateCourses && courses.length === 0 && (
+            <button 
+              className="create-course-btn" 
+              onClick={handleCreateCourse}
+              style={{ marginTop: '1rem' }}
+            >
+              Create Your First Course
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="courses-grid">
+          {filteredCourses.map(course => {
+            const progressInfo = getProgressInfo(course);
+            
+            return (
+              <div key={course.id} className="course-card">
+                <div className="course-thumbnail">
+                  <div className="play-icon">▶️</div>
+                </div>
+                
+                <div className="course-content">
+                  <h3 className="course-title">{course.title}</h3>
+                  <p className="course-description">{course.description}</p>
+                  
+                  <div className="course-meta">
+                    <span className={`course-badge ${getDifficultyColor(course.difficulty_level)}`}>
+                      {course.difficulty_level}
+                    </span>
+                    {course.category && (
+                      <span className="course-badge course-category">
+                        {course.category}
+                      </span>
+                    )}
+                    <span style={{ color: '#64748B', fontSize: '0.8rem' }}>
+                      By {course.created_by_name}
+                    </span>
+                  </div>
+                  
+                  {/* Progress for students */}
+                  {user?.role === 'student' && progressInfo && progressInfo.isEnrolled && (
+                    <div className="course-progress">
+                      <div className="progress-bar">
+                        <div 
+                        </div>
+                      </>
+                    );
+
+                    const content = (
+                      <div className="courses-inner">
+                        {renderCoursesContent()}
+                        {/* Courses Grid and rest of UI rendered inside renderCoursesContent */}
+                      </div>
+                    );
+
+                    if (embedded) {
+                      return (
+                        <div className="courses-embedded" style={{ width: '100%' }}>
+                          {content}
+                        </div>
+                      );
+                    }
+
+                    // Full page render when not embedded
+                    return (
+                      <div className="courses-page">
+                        {/* Global Header (matches other dashboards) */}
+                        <header>
+                          <nav className="navbar">
+                            <div className="logo">Career<span>Nest</span></div>
+                            <ul className="nav-links">
+                              <li><a href="#about">About</a></li>
+                              <li><a href="#help">Help</a></li>
+                              <li>
+                                <button className="logout-btn" onClick={() => navigate('/Role')}>Logout</button>
+                              </li>
+                            </ul>
+                          </nav>
+                        </header>
+
+                        <div className="dashboard-main">
+                          {content}
+                        </div>
+                      </div>
+                    );
+                  };
+
+                  export default CoursesPage;
+                        {progressInfo.isCompleted 
+                          ? `Completed • Quiz: ${Math.round(progressInfo.quizScore)}%`
+                          : `Progress: ${Math.round(progressInfo.overallProgress)}%`
+                        }
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="course-actions">
+                    <button 
+                      className="course-btn btn-primary"
+                      onClick={() => handleCourseClick(course)}
+                    >
+                      {user?.role === 'student' 
+                        ? (progressInfo?.isEnrolled ? 'Continue' : 'Enroll') 
+                        : 'View Details'
+                      }
+                    </button>
+                    
+                    {user?.role === 'student' && progressInfo?.quizScore > 0 && (
+                      <button className="course-btn btn-secondary">
+                        Quiz: {Math.round(progressInfo.quizScore)}%
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Course Details Modal */}
+      {selectedCourse && (
+        <CourseModal
+          course={selectedCourse}
+          userRole={user?.role}
+          onClose={() => setSelectedCourse(null)}
+          onEnrollmentChange={loadCourses}
+        />
+      )}
+
+      {/* Create Course Modal */}
+      {showCreateModal && (
+        <CreateCourseModal
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onCourseCreated={loadCourses}
+        />
+      )}
+      </div>
+    </div>
+  );
+};
+
+export default CoursesPage;
