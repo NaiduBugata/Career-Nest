@@ -41,6 +41,9 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
+// Trust proxy - Required when behind reverse proxy (Render, Heroku, etc.)
+app.set('trust proxy', 1);
+
 // Connect to MongoDB
 connectDB();
 
