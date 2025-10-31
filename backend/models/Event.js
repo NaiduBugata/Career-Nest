@@ -92,6 +92,6 @@ eventSchema.index({ createdBy: 1 });
 eventSchema.index({ organizationId: 1 });
 eventSchema.index({ visibility: 1 });
 eventSchema.index({ status: 1 });
-eventSchema.index({ eventCode: 1 });
+// eventCode already has unique: true, so no need for separate index
 
 module.exports = mongoose.model('Event', eventSchema);
