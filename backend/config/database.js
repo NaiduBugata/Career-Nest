@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/CareerNest';
+    const mongoURI = process.env.MONGODB_URI || "mongodb+srv://naidubugata88:Ke33d5p7i4dUwP57@cluster0.gmfkqag.mongodb.net/careernest?retryWrites=true&w=majority&appName=Cluster0";
     
     // Mongoose 6.x+ doesn't need these deprecated options
     await mongoose.connect(mongoURI);
