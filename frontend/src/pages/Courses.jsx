@@ -112,17 +112,25 @@ const Courses = () => {
 
   return (
     <div className="courses-page">
-      {/* Use the same inner layout as the embedded organization courses so visuals match */}
-      <div className="courses-inner">
-        <div className="courses-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button className="btn-details" onClick={goBack} style={{ padding: '0.4rem 0.6rem', borderRadius: '8px' }}>← Back</button>
-            <h2 style={{ margin: 0 }}>📚 Courses</h2>
+      <header className="dashboard-header">
+        <div className="header-content">
+          <div className="logo">Career<span>Nest</span></div>
+          <div className="header-right">
+            <button className="btn-details" onClick={goBack} style={{ padding: '0.5rem 0.75rem' }}>← Back to Dashboard</button>
           </div>
-          {canCreateCourses && (
-            <button className="create-course-btn" onClick={() => setShowCreateModal(true)}>➕ Create Course</button>
-          )}
         </div>
+      </header>
+
+      <div className="dashboard-main">
+        <div className="courses-inner">
+          <div className="courses-header">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <h1 className="courses-title" style={{ margin: 0 }}>📚 Courses</h1>
+            </div>
+            {canCreateCourses && (
+              <button className="create-course-btn" onClick={() => setShowCreateModal(true)}>➕ Create Course</button>
+            )}
+          </div>
 
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <input type="text" placeholder="Search courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ padding: '0.75rem', border: '1px solid #D1D5DB', borderRadius: '6px', minWidth: '200px', flex: 1 }} />
@@ -211,6 +219,7 @@ const Courses = () => {
             />
           )}
         </div>
+      </div>
     </div>
   );
 };

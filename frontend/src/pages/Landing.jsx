@@ -1,12 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/universal.css";
 
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // If the document is already loaded, hide loader quickly.
+    if (document.readyState === "complete") {
+      // small timeout so loader is visible briefly on very-fast loads
+      const t = setTimeout(() => setLoading(false), 250);
+      return () => clearTimeout(t);
+    }
+
+    // Otherwise wait for window load event (all resources)
+    const onLoad = () => setLoading(false);
+    window.addEventListener("load", onLoad);
+
+    // Fallback: hide loader after 3s even if load event didn't fire
+    const fallback = setTimeout(() => setLoading(false), 3000);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      clearTimeout(fallback);
+    };
+  }, []);
 
   return (
     <div className="main-container"> {/* Added wrapper div */}
+      {/* Page loader overlay */}
+      {loading && (
+        <div className="page-loader" role="status" aria-live="polite" aria-label="Loading">
+          <div className="spinner" />
+        </div>
+      )}
       {/* ===== Navigation ===== */}
       <header>
         <nav className="navbar">
@@ -18,10 +46,10 @@ function LandingPage() {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
             </li>
             <li>
-              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
+              <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
             </li>
             <li>
               <Link to="/Role" className="btn" onClick={() => setMenuOpen(false)}>
@@ -123,7 +151,7 @@ function LandingPage() {
       <footer>
         <p>&copy; 2025 Career Nest. All rights reserved.</p>
         <div className="footer-links">
-          <Link to="/about">About</Link>
+          <a href="#about">About</a>
           <a href="#contact">Contact</a>
           <a href="#privacy">Privacy Policy</a>
           <a href="#terms">Terms & Conditions</a>

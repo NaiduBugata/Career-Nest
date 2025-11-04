@@ -490,10 +490,10 @@ const Admin_Dashboard = () => {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
             </li>
             <li>
-              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
+              <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
             </li>
             <li>
               <button className="btn" onClick={() => { setMenuOpen(false); handleLogout(); }}>
