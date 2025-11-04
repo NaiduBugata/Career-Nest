@@ -113,11 +113,12 @@ const Help = () => {
     <div className="help-page">
       {/* Header */}
       <header>
-        <div className="logo">
-          <Link to="/">Career Nest</Link>
-        </div>
-        <nav>
-          <ul className={menuOpen ? 'show' : ''}>
+        <div className="navbar">
+          <div className="logo">
+            <Link to="/">Career Nest</Link>
+          </div>
+          <nav>
+            <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
             <li>
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
@@ -138,6 +139,7 @@ const Help = () => {
             ☰
           </div>
         </nav>
+        </div>
       </header>
 
       {/* Hero Section */}
