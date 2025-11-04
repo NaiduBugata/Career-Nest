@@ -7,8 +7,9 @@
 
 /* Hero Section */
 .about-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  /* match landing hero: light blue to white */
+  background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%);
+  color: #2c3e50;
   padding: 100px 20px;
   text-align: center;
 }
@@ -60,7 +61,7 @@
 
 .mv-card h3 {
   font-size: 1.8rem;
-  color: #667eea;
+  color: #4A90E2; /* landing primary */
   margin-bottom: 15px;
 }
 
@@ -105,9 +106,9 @@
 
 .feature-card:hover {
   background: white;
-  border-color: #667eea;
+  border-color: #4A90E2;
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 16px rgba(74, 144, 226, 0.12);
 }
 
 .feature-card .icon {
@@ -130,8 +131,9 @@
 /* Impact Stats Section */
 .impact-stats {
   padding: 80px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  /* use a light variant similar to hero for subtle contrast */
+  background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%);
+  color: #2c3e50;
 }
 
 .stats-grid {
@@ -171,7 +173,7 @@
 }
 
 .value-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4A90E2 0%, #5BA3F5 100%);
   color: white;
   padding: 35px;
   border-radius: 10px;
@@ -219,7 +221,7 @@
 
 .cta-button {
   display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4A90E2 0%, #5BA3F5 100%);
   color: white;
   padding: 15px 40px;
   font-size: 1.1rem;
