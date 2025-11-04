@@ -24,19 +24,22 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(74, 144, 226, 0.1);
-  border: 1px solid #4A90E2;
-  color: #4A90E2;
-  padding: 0.5rem 1rem;
+  /* Match success back button: solid primary background */
+  background: #0c10cf;
+  border: none;
+  color: white;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
+  transition: all 0.25s ease;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(12,16,207,0.12);
 }
 
 .back-button:hover {
-  background: #4A90E2;
-  color: white;
+  background: #0a0eb5;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(12,16,207,0.18);
 }
 
 .registration-header h1 {
