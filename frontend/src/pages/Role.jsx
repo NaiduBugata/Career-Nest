@@ -54,10 +54,10 @@ const RoleSelection = () => {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link> 
             </li>
             <li>
-              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
             </li>
             <li>
-              <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
+              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
             </li>
             {/* <li>
               <Link to="/AuthForm" className="btn" onClick={() => setMenuOpen(false)}>
@@ -100,9 +100,10 @@ const RoleSelection = () => {
                   <div className="existing-org-link">
                     <small>
                       Already have credentials? 
-                      <a 
-                        href="#" 
+                      <a
+                        href="#"
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           localStorage.setItem('selectedRole', 'organization');
                           navigate('/organization-login');

@@ -8,3 +8,14 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// Remove the preloader (if present) after React has mounted
+try {
+  const pre = document.getElementById('preloader')
+  if (pre) {
+    // slight delay to ensure users see the loader for very fast loads too
+    setTimeout(() => pre.remove(), 80)
+  }
+} catch (e) {
+  // ignore
+}

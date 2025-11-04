@@ -3,10 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="theme-color" content="#4A90E2" />
+    <style>
+      /* Minimal preloader styles so something shows immediately */
+      #preloader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg,#eaf4ff 0%, #f8f9fa 100%);
+        z-index: 9999;
+        font-family: 'Poppins', sans-serif;
+        color: #2c3e50;
+      }
+      #preloader .box {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        background: #4A90E2;
+        border-radius: 50%;
+        animation: pop 1s infinite ease-in-out;
+      }
+      .dot:nth-child(2) { animation-delay: 0.15s }
+      .dot:nth-child(3) { animation-delay: 0.3s }
+      @keyframes pop { 0%,80%,100% { transform: scale(0.6); opacity: .6 } 40% { transform: scale(1); opacity: 1 } }
+      #preloader .msg { font-weight: 600; font-size: 1rem }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Career Nest</title>
   </head>
   <body>
+    <div id="preloader">
+      <div class="box">
+        <div class="dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="msg">Loading Career Nest — a moment please...</div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

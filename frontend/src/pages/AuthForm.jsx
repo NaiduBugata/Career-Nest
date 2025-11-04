@@ -145,10 +145,10 @@ const AuthForm = () => {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
             </li>
             <li>
-              <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
+              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
             </li>
           </ul>
           <div
@@ -208,7 +208,7 @@ const AuthForm = () => {
               <div className="regi-link">
                 <p>
                   Don't have an account? <br />
-                  <a href="#" onClick={handleRegisterClick}>Sign Up</a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); handleRegisterClick(); }}>Sign Up</a>
                 </p>
               </div>
             )}
@@ -272,7 +272,7 @@ const AuthForm = () => {
             <div className="regi-link">
               <p>
                 Already have an account? <br />
-                <a href="#" onClick={handleLoginClick}>Sign In</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); handleLoginClick(); }}>Sign In</a>
               </p>
             </div>
           </form>

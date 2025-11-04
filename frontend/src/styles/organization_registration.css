@@ -333,6 +333,8 @@
   background: #0a0eb5;
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(12,16,207,0.18);
+}
+
 @media (max-width: 768px) {
   .back-button {
     position: static;

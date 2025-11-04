@@ -18,10 +18,10 @@ function LandingPage() {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
             </li>
             <li>
-              <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
+              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
             </li>
             <li>
               <Link to="/Role" className="btn" onClick={() => setMenuOpen(false)}>
@@ -123,7 +123,7 @@ function LandingPage() {
       <footer>
         <p>&copy; 2025 Career Nest. All rights reserved.</p>
         <div className="footer-links">
-          <a href="#about">About</a>
+          <Link to="/about">About</Link>
           <a href="#contact">Contact</a>
           <a href="#privacy">Privacy Policy</a>
           <a href="#terms">Terms & Conditions</a>
