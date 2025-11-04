@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import AuthForm from "./pages/AuthForm";
 import RoleSelection from "./pages/Role";
