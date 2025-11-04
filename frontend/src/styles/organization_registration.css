@@ -17,6 +17,8 @@
   text-align: center;
   margin-bottom: 3rem;
   position: relative;
+  /* add top padding so the back button doesn't overlap the header content */
+  padding-top: 1.2rem;
 }
 
 .back-button {
@@ -309,63 +311,63 @@
   transition: all 0.3s ease;
 }
 
-.back-btn:hover {
+.back-button {
+  position: absolute;
+  left: 1rem;
+  top: 16px; /* position near the top to avoid overlapping centered header content */
+  transform: none;
+  /* Match success back button: solid primary background */
+  background: #0c10cf;
+  border: none;
+  color: white;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(12,16,207,0.12);
+  z-index: 20;
+}
+
+.back-button:hover {
   background: #0a0eb5;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(12, 16, 207, 0.4);
-}
-
-.success-note {
-  color: #ffc107;
-  font-style: italic;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-/* Responsive Design */
+  box-shadow: 0 10px 24px rgba(12,16,207,0.18);
 @media (max-width: 768px) {
-  .org-registration {
-    padding: 1rem 0.5rem;
-  }
-  
-  .registration-header h1 {
-    font-size: 2rem;
-  }
-  
   .back-button {
     position: static;
     transform: none;
     margin-bottom: 1rem;
     display: inline-block;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .approval-steps {
     grid-template-columns: 1fr;
   }
-  
+
   .step {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .step-number {
     margin-bottom: 0.5rem;
   }
-  
+
   .success-card {
     padding: 2rem 1rem;
   }
-  
+
   .success-card h1 {
     font-size: 1.5rem;
   }
-  
+
   .submit-btn {
     width: 100%;
     min-width: auto;
