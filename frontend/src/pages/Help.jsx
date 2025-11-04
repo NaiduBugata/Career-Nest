@@ -115,7 +115,7 @@ const Help = () => {
       <header>
         <div className="navbar">
           <div className="logo">
-            <Link to="/">Career Nest</Link>
+            <Link to="/">Career <span>Nest</span></Link>
           </div>
           <nav>
             <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>

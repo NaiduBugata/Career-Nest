@@ -63,6 +63,17 @@ header {
   text-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
 }
 
+/* Ensure logo link has no underline and inherits colors */
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo a:hover {
+  text-decoration: none;
+  color: #4A90E2;
+}
+
 .nav-links {
   display: flex;
   list-style: none;
