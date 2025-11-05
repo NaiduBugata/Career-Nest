@@ -46,10 +46,10 @@ function LandingPage() {
               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li>
-              <a href="/help#about" onClick={() => setMenuOpen(false)}>About</a>
+              <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
             </li>
             <li>
-              <a href="/help#help" onClick={() => setMenuOpen(false)}>Help</a>
+              <Link to="/help" onClick={() => setMenuOpen(false)}>Help</Link>
             </li>
             <li>
               <Link to="/Role" className="btn" onClick={() => setMenuOpen(false)}>
